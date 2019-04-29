@@ -69,6 +69,7 @@ public class EmailBox extends JFrame {
 
 		table_emails = new JTable();
 		table_emails.setModel(emailsModel);
+		table_emails.getColumnModel().getColumn(0).setPreferredWidth(200);
 		// table_emails.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table_emails);
 
@@ -92,7 +93,7 @@ public class EmailBox extends JFrame {
 			
 			emailsModel.setValueAt(email.getFrom(), i, 0);
 			emailsModel.setValueAt(email.getData(), i, 1);
-			emailsModel.setValueAt(email.getData(), i, 2);
+			emailsModel.setValueAt(email.getTime(), i, 2);
 			i++;
 		}
 		

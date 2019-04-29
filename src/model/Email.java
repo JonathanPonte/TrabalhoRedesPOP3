@@ -9,12 +9,13 @@ public class Email {
 	private String to;
 	private String base64;
 	private String data;
+	private String time;
 
 	public Email() {
 
 	}
 
-	public Email(int id, String subject, String textBody, String from, String to, String base64, String data) {
+	public Email(int id, String subject, String textBody, String from, String to, String base64, String data, String time) {
 		super();
 		this.id = id;
 		this.to = to;
@@ -23,6 +24,7 @@ public class Email {
 		this.from = from;
 		this.base64 = base64;
 		this.data = data;
+		this.time = time;
 	}
 
 	public int getId() {
@@ -77,8 +79,18 @@ public class Email {
 		return to;
 	}
 
-	public void setTo(String to) {
-		this.to = to;
+	public void setTo(String time) {
+		this.setTime(time);
 	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+	
+
 
 }

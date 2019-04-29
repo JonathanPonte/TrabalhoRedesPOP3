@@ -8,6 +8,7 @@ import java.util.List;
 import model.Email;
 import enums.Commands;
 import service.EmailService;
+import utils.Util;
 
 public class Controller {
 
@@ -71,6 +72,7 @@ public class Controller {
 		String response = "";
 		String from = "";
 		String date = "";
+		String time = "";
 		String subject = "";
 		String body = "";
 		String to = "";
@@ -80,19 +82,24 @@ public class Controller {
 			response = response();
 
 			if (response.contains("To: ")) {
-				to = response;
+				to = response.split(" ")[1];
 				System.out.println(to);
 			}
-
 			
+			if (response.contains("From: ")) {
+				from = Util.fetchEmailFrom(response);
+				System.out.println(from);
+			}
 
 			if (response.contains("Date: ")) {
-				date = response;
+				String[] dateTime = response.split(" ");
+				date = date + dateTime[1] + " " + dateTime[2] + " " + dateTime[3] + " " + dateTime[4];
 				System.out.println(date);
+				time = time + dateTime[5];
 			}
 
 			if (response.contains("Subject: ")) {
-				subject = response;
+				subject = Util.fetchSubject(response);
 				System.out.println(subject);
 			}
 
@@ -113,7 +120,7 @@ public class Controller {
 
 		}
 
-		return new Email(id, subject, body, from, to, null, date);
+		return new Email(id, subject, body, from, to, null, date, time);
 
 	}
 
