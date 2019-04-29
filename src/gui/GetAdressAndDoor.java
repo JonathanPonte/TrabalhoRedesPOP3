@@ -53,30 +53,32 @@ public class GetAdressAndDoor extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Informe o endere\u00E7o de conex\u00E3o");
+		JLabel lblNewLabel = new JLabel("Endere\u00E7o:");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBackground(Color.BLACK);
-		lblNewLabel.setBounds(69, 61, 181, 20);
+		lblNewLabel.setBounds(10, 92, 79, 20);
 		contentPane.add(lblNewLabel);
 
 		adress_home = new JTextField();
+		adress_home.setText("pop.gmail.com");
 		adress_home.setBounds(79, 92, 126, 20);
 		contentPane.add(adress_home);
 		adress_home.setColumns(10);
 
-		JLabel lblSenha = new JLabel("Informe a porta de conex\u00E3o");
+		JLabel lblSenha = new JLabel("Porta: ");
 		lblSenha.setForeground(Color.WHITE);
-		lblSenha.setBounds(69, 123, 181, 20);
+		lblSenha.setBounds(10, 123, 65, 20);
 		contentPane.add(lblSenha);
 
 		door_home = new JTextField();
+		door_home.setText("995");
 		door_home.setColumns(10);
-		door_home.setBounds(79, 154, 126, 20);
+		door_home.setBounds(79, 123, 126, 20);
 		contentPane.add(door_home);
 
 		JLabel lblEndereoDeConexo = new JLabel("Endere\u00E7o de conex\u00E3o ou porta est\u00E3o incorretos");
 		lblEndereoDeConexo.setForeground(Color.RED);
-		lblEndereoDeConexo.setBounds(30, 230, 240, 14);
+		lblEndereoDeConexo.setBounds(0, 200, 300, 14);
 		lblEndereoDeConexo.setVisible(false);
 		contentPane.add(lblEndereoDeConexo);
 
@@ -92,9 +94,9 @@ public class GetAdressAndDoor extends JFrame {
 					Controller.setAdressAndDoor(adress, door);
 					System.out.println(Controller.response());
 
-					GetEmailAndPassword getEmailPassword = new GetEmailAndPassword();
+					GetEmailAndPassword getEmailPasswordWindow = new GetEmailAndPassword();
 
-					getEmailPassword.setVisible(true);
+					getEmailPasswordWindow.setVisible(true);
 					setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					dispose();
 
@@ -106,7 +108,7 @@ public class GetAdressAndDoor extends JFrame {
 
 			}
 		});
-		btnEnviar.setBounds(97, 196, 89, 23);
+		btnEnviar.setBounds(89, 154, 89, 23);
 		contentPane.add(btnEnviar);
 
 		setLocationRelativeTo(null);
