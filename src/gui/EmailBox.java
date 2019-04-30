@@ -104,10 +104,9 @@ public class EmailBox extends JFrame {
 					OpenedEmail openedEmail = new OpenedEmail(emails.get(selectedRow));
 					openedEmail.setVisible(true);
 					
-					String[] type = emails.get(selectedRow).getFileName().split(".");
-					System.out.println("aquiiiii" + type[0]);
+					
 
-					if (emails.get(selectedRow).getBase64() != "" && type[1] != "pdf") {
+					if (emails.get(selectedRow).getBase64() != "") {
 
 						// byte[] btDataFile = Base64.decodeBase64(email.getBase64());
 						// Base64 base64 = Base64.decodeBase64(email.getBase64());
