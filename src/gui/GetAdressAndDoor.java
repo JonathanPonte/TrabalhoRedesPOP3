@@ -52,6 +52,7 @@ public class GetAdressAndDoor extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.setLayout(null);
+		
 
 		JLabel lblNewLabel = new JLabel("Endere\u00E7o:");
 		lblNewLabel.setForeground(Color.WHITE);

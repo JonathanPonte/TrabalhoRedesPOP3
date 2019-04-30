@@ -1,11 +1,14 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import controller.Controller;
@@ -20,11 +23,14 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 public class EmailBox extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table_emails;
+	int aux = 1;
+	ArrayList<Email> emails;
 	DefaultTableModel emailsModel = new DefaultTableModel();
 
 	/**
@@ -50,7 +56,6 @@ public class EmailBox extends JFrame {
 	 * @throws IOException
 	 */
 	public EmailBox() {
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 543, 307);
 		contentPane = new JPanel();
@@ -60,7 +65,8 @@ public class EmailBox extends JFrame {
 		emailsModel.addColumn("Remetente");
 		emailsModel.addColumn("Data");
 		emailsModel.addColumn("Hora");
-		emailsModel.addColumn("Abrir Email");
+		setLocationRelativeTo(null);
+		setResizable(false);
 
 		JScrollPane scrollPane = new JScrollPane(table_emails, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -69,6 +75,7 @@ public class EmailBox extends JFrame {
 
 		table_emails = new JTable();
 		table_emails.setModel(emailsModel);
+		table_emails.setBackground(Color.cyan);
 		table_emails.getColumnModel().getColumn(0).setPreferredWidth(200);
 		// table_emails.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		scrollPane.setViewportView(table_emails);
@@ -78,25 +85,54 @@ public class EmailBox extends JFrame {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 		}
+
 		
+		
+		ListSelectionModel model = table_emails.getSelectionModel();
+		model.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				
+					 
+					if(aux == 1) {
+					int selectedRow = model.getMinSelectionIndex();
+					// System.out.println(selectedRow);
+					OpenedEmail openedEmail = new OpenedEmail(emails.get(selectedRow));
+					openedEmail.setVisible(true);
+					aux = 2;
+					}else {
+						aux = 1;
+					}
+				
+					
+						
+			}
+		});
+
 	}
 
 	public void listEmails() throws IOException {
-		ArrayList<Email> emails = (ArrayList<Email>) Controller.ListEmail();
+		emails = (ArrayList<Email>) Controller.ListEmail();
+
+		setTitle("Logado: " + emails.get(0).getTo());
 
 		int size = emails.size();
 
 		emailsModel.setNumRows(size);
-		
+
 		int i = 0;
 		for (Email email : emails) {
-			
+
 			emailsModel.setValueAt(email.getFrom(), i, 0);
 			emailsModel.setValueAt(email.getData(), i, 1);
 			emailsModel.setValueAt(email.getTime(), i, 2);
 			i++;
 		}
-		
+
+		// ButtonColumn buttonColumn = new ButtonColumn(table_emails, 3, emails,
+		// table_emails.getSelectedRowCount());
+
 //		for (int i = 0; i < size; i++) {
 //			emailsModel.setValueAt(emails.get(i).getFrom(), i, 0);
 //			emailsModel.setValueAt(emails.get(i).getData(), i, 1);

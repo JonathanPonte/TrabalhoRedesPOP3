@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
@@ -81,7 +82,7 @@ public class GetEmailAndPassword extends JFrame {
 		lblSenha.setBounds(57, 132, 48, 14);
 		contentPane.add(lblSenha);
 
-		textFieldPassword = new JTextField();
+		textFieldPassword = new JPasswordField();
 		textFieldPassword.setText("redes123");
 		textFieldPassword.setColumns(10);
 		textFieldPassword.setBounds(100, 129, 130, 20);
