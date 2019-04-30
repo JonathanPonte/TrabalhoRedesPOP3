@@ -10,15 +10,17 @@ public class Email {
 	private String base64;
 	private String data;
 	private String time;
+	private String fileName;
 
 	public Email() {
 
 	}
 
-	public Email(int id, String subject, String textBody, String from, String to, String base64, String data, String time) {
+	public Email(int id, String subject, String textBody, String from, String to, String base64, String data, String time, String fileName) {
 		super();
 		this.id = id;
 		this.to = to;
+		this.setFileName(fileName);
 		this.subject = subject;
 		this.textBody = textBody;
 		this.from = from;
@@ -89,6 +91,14 @@ public class Email {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	
 

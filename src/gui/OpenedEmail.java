@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 
 import javax.swing.SwingConstants;
@@ -124,19 +125,31 @@ public class OpenedEmail extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(email.getBase64() != "") {
-
+					
+					File file = new File("C:/Users/Public/Downloads");
+//					
+//					File[] files =  file.listFiles();
+//					
+//					for(int i=0; i < files.length; i++) {
+//						
+//						files[i].delete();
+//						
+//					}
+					
+					
+			
 				byte[] imageBytes = Base64.getDecoder().decode(email.getBase64());
 				FileOutputStream fileone;
-				FileOutputStream filetwo;
+//				FileOutputStream filetwo;
 				try {
-					fileone = new FileOutputStream("C:/Users/Public/Downloads/fileOne.pdf");
-					filetwo = new FileOutputStream("C:/Users/Public/Downloads/fileTwo.png");
+					fileone = new FileOutputStream("C:/Users/Public/Downloads/" + email.getFileName());
+					//filetwo = new FileOutputStream("C:/Users/Public/Downloads/fileTwo.png");
 					
-					filetwo.write(imageBytes);
+					//filetwo.write(imageBytes);
 					fileone.write(imageBytes);
 					fileone.close();
 					
-					File file = new File("C:/Users/Public/Downloads");
+					
 					
 					Desktop.getDesktop().open(file);
 					

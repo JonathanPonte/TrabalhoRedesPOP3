@@ -77,6 +77,7 @@ public class Controller {
 		String body = "";
 		String to = "";
 		String base64 = "";
+		String fileName = "";
 
 		output.println("RETR " + i);
 		while (!response.equals(".")) {
@@ -118,6 +119,13 @@ public class Controller {
 				}
 				System.out.println(body);
 			}
+			
+			if (response.contains("filename")) {
+				String[] filename = response.split("\"");
+
+				fileName = filename[1];
+
+			}
 
 			if (response.contains("X-Attachment-Id")) {
 
@@ -137,7 +145,7 @@ public class Controller {
 
 		}
 
-		return new Email(id, subject, body, from, to, base64, date, time);
+		return new Email(id, subject, body, from, to, base64, date, time, fileName);
 
 	}
 
