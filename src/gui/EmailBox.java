@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.Controller;
 import model.Email;
+import model.FilesDownload;
 import service.EmailService;
 
 import javax.imageio.ImageIO;
@@ -99,33 +100,46 @@ public class EmailBox extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 
 				if (aux == 1) {
+
 					int selectedRow = model.getMinSelectionIndex();
 					// System.out.println(selectedRow);
 					OpenedEmail openedEmail = new OpenedEmail(emails.get(selectedRow));
 					openedEmail.setVisible(true);
+
+					ArrayList<FilesDownload> files = emails.get(selectedRow).getFileDownload();
 					
 					
 
-					if (emails.get(selectedRow).getBase64() != "") {
+					for (FilesDownload filesDownload : files) {
 
-						// byte[] btDataFile = Base64.decodeBase64(email.getBase64());
-						// Base64 base64 = Base64.decodeBase64(email.getBase64());
+						if (filesDownload.getBases64() != null &&  !filesDownload.getFileNames().contains("pdf")) {
 
-						BufferedImage image;
+							// byte[] btDataFile = Base64.decodeBase64(email.getBase64());
+							// Base64 base64 = Base64.decodeBase64(email.getBase64());
 
-						byte[] btDataFile = Base64.getDecoder().decode(emails.get(selectedRow).getBase64());
-						try {
-							image = ImageIO.read(new ByteArrayInputStream(btDataFile));
-							JOptionPane.showMessageDialog(null, "", "Image", JOptionPane.INFORMATION_MESSAGE,
-									new ImageIcon(image));
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+							System.out.println(filesDownload.getBases64() + "" + filesDownload.getFileNames());
+							BufferedImage image;
+
+							
+							System.out.println("AQUIIIIIIIII" +filesDownload.getFileNames());
+							
+							
+							
+							byte[] btDataFile = Base64.getDecoder().decode(filesDownload.getBases64());
+							try {
+								image = ImageIO.read(new ByteArrayInputStream(btDataFile));
+								JOptionPane.showMessageDialog(null, "", "Image", JOptionPane.INFORMATION_MESSAGE,
+										new ImageIcon(image));
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+
 						}
-
 						
-
 					}
+
+					
 
 					aux = 2;
 				} else {

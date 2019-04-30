@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Email;
+import model.FilesDownload;
 import enums.Commands;
 import service.EmailService;
 import utils.Util;
@@ -78,6 +79,12 @@ public class Controller {
 		String to = "";
 		String base64 = "";
 		String fileName = "";
+		ArrayList<FilesDownload> filesDownloads = new ArrayList<FilesDownload>();
+		
+		FilesDownload fd = null;
+		
+		
+		
 
 		output.println("RETR " + i);
 		while (!response.equals(".")) {
@@ -124,6 +131,9 @@ public class Controller {
 				String[] filename = response.split("\"");
 
 				fileName = filename[1];
+				fd = new FilesDownload();
+				
+				fd.setFileNames(fileName);
 
 			}
 
@@ -138,14 +148,23 @@ public class Controller {
 					}
 
 				}
-
 				
+				
+				
+				fd.setBases64(base64);
+				base64 = "";
+				
+				filesDownloads.add(fd);
+				
+			//	bases64.add(base64);
 				
 			}
 
 		}
+		
+		
 
-		return new Email(id, subject, body, from, to, base64, date, time, fileName);
+		return new Email(id, subject, body, from, to, base64, date, time, fileName, filesDownloads);
 
 	}
 

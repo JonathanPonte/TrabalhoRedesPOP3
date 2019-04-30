@@ -36,23 +36,18 @@ public class Main {
 		String base64 = "";
 
 		String name = "";
-		
-		output.println("RETR 4");
+
+		output.println("RETR 8");
 		response = EmailService.readOneLine();
 		while (!response.equals(".")) {
 			response = EmailService.readOneLine();
 
-			if (response.contains("filename")) {
-				String[] fileName = response.split("\"");
-
-				name = fileName[1];
-
-			}
+			System.out.println(response);
 
 		}
-		
+
 		System.out.println(name);
-		
+
 		// System.out.println(response);
 
 //		output.println("RETR 2");

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Email {
 
 	private int id;
@@ -11,15 +13,18 @@ public class Email {
 	private String data;
 	private String time;
 	private String fileName;
+	private ArrayList<FilesDownload> fileDownload;
 
 	public Email() {
 
 	}
 
-	public Email(int id, String subject, String textBody, String from, String to, String base64, String data, String time, String fileName) {
+	public Email(int id, String subject, String textBody, String from, String to, String base64, String data,
+			String time, String fileName, ArrayList<FilesDownload> files) {
 		super();
 		this.id = id;
 		this.to = to;
+		this.fileDownload = files;
 		this.setFileName(fileName);
 		this.subject = subject;
 		this.textBody = textBody;
@@ -27,6 +32,14 @@ public class Email {
 		this.base64 = base64;
 		this.data = data;
 		this.time = time;
+	}
+
+	public ArrayList<FilesDownload> getFileDownload() {
+		return fileDownload;
+	}
+
+	public void setFileDownload(ArrayList<FilesDownload> fileDownload) {
+		this.fileDownload = fileDownload;
 	}
 
 	public int getId() {
@@ -100,7 +113,5 @@ public class Email {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	
-
 
 }

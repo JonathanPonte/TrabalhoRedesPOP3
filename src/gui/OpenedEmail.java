@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import model.Email;
+import model.FilesDownload;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -123,51 +124,47 @@ public class OpenedEmail extends JFrame {
 		JButton btnNewButton = new JButton("Download");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(email.getBase64() != "") {
-					
+
+				ArrayList<FilesDownload> fileDownload = email.getFileDownload();
+
+				if (fileDownload != null) {
+
 					File file = new File("C:/Users/Public/Downloads");
-//					
-//					File[] files =  file.listFiles();
-//					
-//					for(int i=0; i < files.length; i++) {
-//						
-//						files[i].delete();
-//						
-//					}
-					
-					
-			
-				byte[] imageBytes = Base64.getDecoder().decode(email.getBase64());
-				FileOutputStream fileone;
-//				FileOutputStream filetwo;
-				try {
-					fileone = new FileOutputStream("C:/Users/Public/Downloads/" + email.getFileName());
-					//filetwo = new FileOutputStream("C:/Users/Public/Downloads/fileTwo.png");
-					
-					//filetwo.write(imageBytes);
-					fileone.write(imageBytes);
-					fileone.close();
-					
-					
-					
-					Desktop.getDesktop().open(file);
-					
 
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} // Or PDF file
-				catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					for (FilesDownload filesDownload : fileDownload) {
+						
+						byte[] imageBytes = Base64.getDecoder().decode(filesDownload.getBases64());
+						FileOutputStream fileone;
 
-				}else {
+						try {
+							fileone = new FileOutputStream("C:/Users/Public/Downloads/" + filesDownload.getFileNames());
+							// filetwo = new FileOutputStream("C:/Users/Public/Downloads/fileTwo.png");
+
+							// filetwo.write(imageBytes);
+							fileone.write(imageBytes);
+							fileone.close();
+
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} // Or PDF file
+						catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					
+					try {
+						Desktop.getDesktop().open(file);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+				} else {
 					JOptionPane.showMessageDialog(null, "esse email não possui anexos.");
 				}
-				
-				
+
 			}
 		});
 		btnNewButton.setBounds(323, 255, 105, 23);
