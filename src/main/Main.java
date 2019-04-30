@@ -40,18 +40,7 @@ public class Main {
 		while (!response.equals(".")) {
 			response = EmailService.readOneLine();
 
-			if (response.contains("X-Attachment-Id")) {
-
-				while (!response.contains("--")) {
-					response = EmailService.readOneLine();
-
-					if (!response.contains("--")) {
-						base64 += response;
-					}
-
-				}
-
-			}
+			System.out.println(response);
 
 		}
 		

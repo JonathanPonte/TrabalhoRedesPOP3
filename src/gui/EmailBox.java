@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -15,10 +16,15 @@ import controller.Controller;
 import model.Email;
 import service.EmailService;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
@@ -86,27 +92,44 @@ public class EmailBox extends JFrame {
 			// TODO Auto-generated catch block
 		}
 
-		
-		
 		ListSelectionModel model = table_emails.getSelectionModel();
 		model.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				
-					 
-					if(aux == 1) {
+
+				if (aux == 1) {
 					int selectedRow = model.getMinSelectionIndex();
 					// System.out.println(selectedRow);
 					OpenedEmail openedEmail = new OpenedEmail(emails.get(selectedRow));
 					openedEmail.setVisible(true);
-					aux = 2;
-					}else {
-						aux = 1;
-					}
-				
-					
+
+					if (emails.get(selectedRow).getBase64() != "") {
+
+						// byte[] btDataFile = Base64.decodeBase64(email.getBase64());
+						// Base64 base64 = Base64.decodeBase64(email.getBase64());
+
+						BufferedImage image;
+
+						byte[] btDataFile = Base64.getDecoder().decode(emails.get(selectedRow).getBase64());
+						try {
+							image = ImageIO.read(new ByteArrayInputStream(btDataFile));
+							JOptionPane.showMessageDialog(null, "", "Image", JOptionPane.INFORMATION_MESSAGE,
+									new ImageIcon(image));
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
 						
+
+					}
+
+					aux = 2;
+				} else {
+					aux = 1;
+				}
+
 			}
 		});
 
