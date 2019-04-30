@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,7 +13,14 @@ import model.Email;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Base64;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 
@@ -96,11 +105,32 @@ public class OpenedEmail extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
-		setTitle("Logado: " + email.getTo());
+		setTitle("Assunto: " + email.getSubject());
 		lbl_from.setText(email.getFrom());
 		label_to.setText(email.getTo());
 		label_data.setText(email.getData() + " " + email.getTime());
 		textPane.setText(email.getTextBody());
+		
+		if(email.getBase64() != "") {
+			
+			//byte[] btDataFile = Base64.decodeBase64(email.getBase64());
+			//Base64 base64 = Base64.decodeBase64(email.getBase64());
+			
+			BufferedImage image;
+			try {
+				byte[] btDataFile = Base64.getDecoder().decode(email.getBase64());
+				image = ImageIO.read(new ByteArrayInputStream(btDataFile));
+				
+				JOptionPane.showMessageDialog(null, "", "Image", 
+				        JOptionPane.INFORMATION_MESSAGE, 
+				        new ImageIcon(image));
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
 		

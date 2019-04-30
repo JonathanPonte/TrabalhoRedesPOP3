@@ -22,35 +22,50 @@ public class Main {
 		PrintWriter output = EmailService.getOutPut();
 
 		// Username
-		output.println(Commands.USER+ " " + Constants.getUsername());
+		output.println(Commands.USER + " " + Constants.getUsername());
 		response = EmailService.readOneLine();
 		System.out.println(response);
 
 		// Password
-		output.println("PASS "+ " " + Constants.getPassword());
+		output.println("PASS " + " " + Constants.getPassword());
 		response = EmailService.readOneLine();
 		System.out.println(response);
 
 		System.out.println();
+
+		String base64 = "";
+
+		output.println("RETR 4");
+		response = EmailService.readOneLine();
+		while (!response.equals(".")) {
+			response = EmailService.readOneLine();
+
+			if (response.contains("X-Attachment-Id")) {
+
+				while (!response.contains("--")) {
+					response = EmailService.readOneLine();
+
+					if (!response.contains("--")) {
+						base64 += response;
+					}
+
+				}
+
+			}
+
+		}
 		
-		output.println("LIST");
-		//response = EmailService.readOneLine();
-		 while (!response.equals(".")) {
-           response = EmailService.readOneLine();
-           System.out.println(response);
-       }
-		//System.out.println(response);
+		System.out.println(base64);
 		
-		
-		
+		// System.out.println(response);
+
 //		output.println("RETR 2");
 //        while (!response.equals(".")) {
 //            response = EmailService.readOneLine();
 //            System.out.println(response);
 //        }
-		
-		
-		//EventQueue.invokeLater(new Runnable() {
+
+		// EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {
 //					GetAdressAndDoor frame = new GetAdressAndDoor();

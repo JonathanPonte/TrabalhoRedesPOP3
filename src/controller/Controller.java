@@ -56,7 +56,7 @@ public class Controller {
 		List<Email> emails = new ArrayList<Email>();
 
 		int size = getNumberOfEmail();
-		
+
 		for (int i = 1; i <= size; i++) {
 			emails.add(getEmail(i));
 		}
@@ -76,6 +76,7 @@ public class Controller {
 		String subject = "";
 		String body = "";
 		String to = "";
+		String base64 = "";
 
 		output.println("RETR " + i);
 		while (!response.equals(".")) {
@@ -85,7 +86,7 @@ public class Controller {
 				to = response.split(" ")[1];
 				System.out.println(to);
 			}
-			
+
 			if (response.contains("From: ")) {
 				from = Util.fetchEmailFrom(response);
 				System.out.println(from);
@@ -118,9 +119,25 @@ public class Controller {
 				System.out.println(body);
 			}
 
+			if (response.contains("X-Attachment-Id")) {
+
+				while (!response.contains("--")) {
+
+					response = EmailService.readOneLine();
+
+					if (!response.contains("--")) {
+						base64 += response;
+					}
+
+				}
+
+				
+				
+			}
+
 		}
 
-		return new Email(id, subject, body, from, to, null, date, time);
+		return new Email(id, subject, body, from, to, base64, date, time);
 
 	}
 
@@ -128,15 +145,15 @@ public class Controller {
 		PrintWriter output = EmailService.getOutPut();
 		output.println("LIST");
 		String response = response();
-		
+
 		System.out.println(response);
 
 		int numberofemails = Integer.parseInt(response.split(" ")[1]);
-		
+
 		while (!response.equals(".")) {
-	           response = EmailService.readOneLine();
-	           System.out.println(response);
-	       }
+			response = EmailService.readOneLine();
+			System.out.println(response);
+		}
 
 		return numberofemails;
 	}
