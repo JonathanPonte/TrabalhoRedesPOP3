@@ -12,12 +12,15 @@ import javax.swing.border.EmptyBorder;
 import model.Email;
 
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -132,6 +135,11 @@ public class OpenedEmail extends JFrame {
 					filetwo.write(imageBytes);
 					fileone.write(imageBytes);
 					fileone.close();
+					
+					File file = new File("C:/Users/Public/Downloads");
+					
+					Desktop.getDesktop().open(file);
+					
 
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
